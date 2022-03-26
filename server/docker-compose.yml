@@ -2,10 +2,53 @@ version: '3.7'
 
 services:
   url-shortener-server:
+    container_name: url-shortener
     restart: always
-    container_name: url-shortener-server
     env_file:
-      - .env
+      - .env_prod
     build:
       context: ./
     image: url-shortener-server
+    expose:
+      - 4000
+    ports:
+       - 4000:4000
+
+  
+  mongo:
+    container_name: mongo-prod
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dev
+      MONGO_INITDB_DATABASE: URL_desarrollo
+    volumes:
+       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+       - ./mongo-volume:/data/db
+    ports:
+       - 27017-27019:27017-27019
+  
+  redis:
+    container_name: redis-prod
+    image: redislabs/redismod
+    environment:
+      - REDIS_APPENDONLY=yes
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
+  
+  postgresdb:
+    container_name: postgresdb-prod
+    image: postgres
+    restart: always
+    privileged: true
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_DB=URLvisitas
+    volumes:
+      - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
+    ports:
+      - 5432:5432
