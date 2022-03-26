@@ -1,0 +1,64 @@
+version: '3.7'
+services:
+  url-shortener-server:
+    restart: always
+    container_name: url-shortener-server
+    env_file:
+      - .env
+    build:
+      context: ./
+    image: url-shortener-server
+    depends_on:
+      - mongo
+      - redis
+      - postgresdb
+
+  mongo:
+    image: 'mongo'
+    container_name: 'my-mongo-container'
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: dev
+      MONGO_INITDB_DATABASE: URL_desarrollo
+    volumes:
+       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+       - ./mongo-volume:/data/db
+    ports:
+       - 27017-27019:27017-27019
+  mongo-express:
+    image: 'mongo-express'
+    container_name: 'my-mongo-express'
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: dev
+      ME_CONFIG_MONGODB_URL: mongo://root:dev@localhost:27017/
+
+  redis:
+    image: redislabs/redismod
+    container_name: redis
+    environment:
+      - REDIS_APPENDONLY=yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
+
+  postgresdb:
+    image: postgres
+    container_name: postgresdb
+    restart: always
+    privileged: true
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_DB=URLvisitas
+    volumes:
+      - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
+    ports:
+      - 5432:5432
