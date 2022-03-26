@@ -10,7 +10,7 @@ services:
       context: ./
     image: url-shortener-server
     expose:
-      - 80
+      - 4000
     ports:
        - 4000:4000
 
