@@ -10,7 +10,7 @@ services:
       context: ./
     image: url-shortener-server
     expose:
-      - 4000
+      - '4000'
     ports:
        - 4000:4000
 
@@ -26,7 +26,7 @@ services:
     volumes:
        - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
        - ./mongo-volume:/data/db
-  ports:
+    ports:
        - 27017-27019:27017-27019
  
   redis:
