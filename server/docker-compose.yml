@@ -12,6 +12,8 @@ services:
       - mongo
       - redis
       - postgresdb
+    networks:
+      - test_network
 
   mongo:
     image: 'mongo'
@@ -26,28 +28,21 @@ services:
        - ./mongo-volume:/data/db
     ports:
        - 27017-27019:27017-27019
-  mongo-express:
-    image: 'mongo-express'
-    container_name: 'my-mongo-express'
-    restart: always
-    ports:
-      - 8081:8081
-    depends_on:
-      - mongo
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: dev
-      ME_CONFIG_MONGODB_URL: mongo://root:dev@localhost:27017/
-
+    networks:
+      - test_network
+ 
   redis:
     image: redislabs/redismod
     container_name: redis
     environment:
       - REDIS_APPENDONLY=yes
     ports:
-      - "6379:6379"
+      - 6379:6379
     volumes:
       - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
+    networks:   
+      - test_network
+
   postgresdb:
     image: postgres
     container_name: postgresdb
@@ -61,3 +56,10 @@ services:
       - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - test_network
+
+  networks: 
+  url_network:
+    driver: “bridge”
+    
