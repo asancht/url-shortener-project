@@ -1,4 +1,5 @@
 version: '3.7'
+
 services:
   url-shortener-server:
     restart: always
@@ -8,58 +9,3 @@ services:
     build:
       context: ./
     image: url-shortener-server
-    depends_on:
-      - mongo
-      - redis
-      - postgresdb
-    networks:
-      - url_network
-
-  mongo:
-    image: 'mongo'
-    container_name: 'my-mongo-container'
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: dev
-      MONGO_INITDB_DATABASE: URL_desarrollo
-    volumes:
-       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
-       - ./mongo-volume:/data/db
-    ports:
-       - 27017-27019:27017-27019
-    networks:
-      - url_network
- 
-  redis:
-    image: redislabs/redismod
-    container_name: redis
-    environment:
-      - REDIS_APPENDONLY=yes
-    ports:
-      - 6379:6379
-    volumes:
-      - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
-    networks:   
-      - url_network
-
-  postgresdb:
-    image: postgres
-    container_name: postgresdb
-    restart: always
-    privileged: true
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=dev
-      - POSTGRES_DB=URLvisitas
-    volumes:
-      - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    networks:
-      - url_network
-
-  networks: 
-  url_network:
-    driver: “bridge”
-    

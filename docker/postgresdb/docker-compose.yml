@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  postgresdb:
+    image: postgres
+    container_name: postgresdb
+    restart: always
+    privileged: true
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_DB=URLvisitas
+    volumes:
+      - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
+    ports:
+      - 5432:5432
