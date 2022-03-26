@@ -1,5 +1,6 @@
 logs/
 node_modulos/
 build/
-.DS_*
+.DS*
+*.lock 
 
