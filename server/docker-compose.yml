@@ -10,9 +10,9 @@ services:
       context: ./
     image: url-shortener-server
     expose:
-      - 4000
+      - 80
     ports:
-       - 4000:4000
+       - 4000:80
 
   
   mongo:
@@ -26,6 +26,8 @@ services:
     volumes:
        - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
        - ./mongo-volume:/data/db
+    expose:
+      - 27017
     ports:
        - 27017-27019:27017-27019
   
@@ -50,5 +52,7 @@ services:
       - POSTGRES_DB=URLvisitas
     volumes:
       - ./postgres-data:/mnt/e/codee/e-commerce/var/lib/postgresql/data
+    expose:
+      - 5432
     ports:
       - 5432:5432
