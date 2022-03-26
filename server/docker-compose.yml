@@ -28,7 +28,7 @@ services:
        - ./mongo-volume:/data/db
   ports:
        - 27017-27019:27017-27019
-  
+ 
   redis:
     container_name: redis-prod
     image: redislabs/redismod
