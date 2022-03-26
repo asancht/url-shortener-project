@@ -13,7 +13,7 @@ services:
       - redis
       - postgresdb
     networks:
-      - test_network
+      - url_network
 
   mongo:
     image: 'mongo'
@@ -29,7 +29,7 @@ services:
     ports:
        - 27017-27019:27017-27019
     networks:
-      - test_network
+      - url_network
  
   redis:
     image: redislabs/redismod
@@ -41,7 +41,7 @@ services:
     volumes:
       - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
     networks:   
-      - test_network
+      - url_network
 
   postgresdb:
     image: postgres
@@ -57,7 +57,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      - test_network
+      - url_network
 
   networks: 
   url_network:
