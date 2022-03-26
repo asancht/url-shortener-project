@@ -48,7 +48,6 @@ services:
       - "6379:6379"
     volumes:
       - ./redis-data:/mnt/e/codee/e-commerce/var/lib/redis/data
-
   postgresdb:
     image: postgres
     container_name: postgresdb
