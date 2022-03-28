@@ -1,3 +1,5 @@
+//Crear usuario de la base de datos mongo a utilizar
+/*
 use URL_desarrollo
 db.createUser(
 {
@@ -11,3 +13,4 @@ db.createUser(
 	]
 }
 )
+*/

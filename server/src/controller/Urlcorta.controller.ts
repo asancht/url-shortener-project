@@ -6,7 +6,7 @@ import { redis } from "../db/redis";
 import dotenv from "dotenv";
 dotenv.config();
 
-
+//Definicion de funciones redis
 const GET_ASYNC = promisify(redis.get).bind(redis);
 const SET_ASYNC = promisify(redis.set).bind(redis);
 const DEL_ASYNC = promisify(redis.del).bind(redis);
@@ -19,8 +19,9 @@ export async function crearURLcorta(req: Request, res: Response) {
   const { URLoriginal } = req.body;
   
   // Crear una URL corta
-  const nuevaURL = await URLCorta.create({ URLoriginal });
-
+  const nuevaURL = new URLCorta({ URLoriginal });
+  await nuevaURL.save();
+  
   // Retorna URL corta
   return res.send(nuevaURL);
 }
@@ -48,6 +49,7 @@ export async function handleRedirect(req: Request, res: Response) {
       }
       else
       {
+        //guarda en cache Redis
         const saveResult = await SET_ASYNC(URL.URLcortaId ,URL.URLoriginal);
         strURLOriginal= URL.URLoriginal;        
       }
@@ -92,13 +94,13 @@ export async function getURLCorta(req: Request, res: Response) {
 export async function updateStatusURL(req: Request, res: Response) {
   // Recupera URlCortaID y el valor boolean del campo habilitada
   const obj = req.body;
+
+  // Actualiza el estado de la URL
+  const URL = await URLCorta.findOneAndUpdate( {"URLcortaId": obj.URLcortaId}, {"habilitada" : obj.habilitada} ,{ returnOriginal: false });
   
   //Borra cache de ID actualizado
   const saveResult = await DEL_ASYNC(obj.URLcortaId);
 
-  // Actualiza el estado de la URL
-  const URL = await URLCorta.findOneAndUpdate( obj.URLcortaId , obj.habilitada ,{new: true });
-  
   //Se valida si realizo el update , en caso contrario envia HTTP 204 ( sin contenido )
   if (!URL) {
     return res.sendStatus(204);
@@ -113,12 +115,12 @@ export async function updateNuevaURL(req: Request, res: Response) {
   // Recupera URlCortaID y la nueva URL
   const obj = req.body;
   
+  // actualiza la URL original
+  const URL = await URLCorta.findOneAndUpdate( {"URLcortaId": obj.URLcortaId}, {"habilitada" : obj.URLoriginal} ,{ returnOriginal: false });
+  
   //Borra cache de ID actualizado
   const saveResult = await DEL_ASYNC(obj.URLcortaId);
 
-  // actualiza la URL original
-  const URL = await URLCorta.findOneAndUpdate(obj.URLcortaId , obj.URLoriginal ,{new: true });
-  
   //Se valida si realizo el update , en caso contrario envia HTTP 204 ( sin copntenido )
   if (!URL) {
     return res.sendStatus(204);

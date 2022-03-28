@@ -20,7 +20,7 @@ function routes(app: Express) {
  *     description: Realiza una validación del healthcheck a la API
  *     responses:
  *       200:
- *         description: API Operativas.
+ *         description: API Operativa.
  *         content:
  *           application/json:
  *             schema:
@@ -69,7 +69,7 @@ function routes(app: Express) {
      * @swagger
      * /{URLcortaId}:
      *   get:
-     *     summary: redirecciona a la URL original con la URL corta.
+     *     summary: Redirecciona a la URL original con la URL corta.
      *     description: "Se ingresa la URL corta generada y se llama a la URL original,
      *                  <b>DISCLAIMER ==> Esta UI no hace el rediccionamiento solo entrega la nueva URL."
      *     produces:
@@ -83,7 +83,6 @@ function routes(app: Express) {
      *     responses:
      *       302:
      *         description: Redireccional sitio original
-     *         
      *       403:
      *         description: URL no encontrada o no habilitada
      *       500:

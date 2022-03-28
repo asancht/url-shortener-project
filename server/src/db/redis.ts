@@ -2,6 +2,8 @@ import Redis from "ioredis";
 import dotenv from "dotenv";
 dotenv.config();
 
+//Configuraciuon de conexión redis
+
 const strPort = process.env.REDIS_PORT as unknown as number;
 const strHost = process.env.REDIS_HOST as string;
 

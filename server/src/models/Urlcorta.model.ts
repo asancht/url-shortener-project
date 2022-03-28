@@ -3,6 +3,8 @@ import { customAlphabet } from "nanoid";
 import dotenv from "dotenv";
 dotenv.config();
 
+//Definición de los campos de la URL
+
 const nanoid = customAlphabet(process.env.ALPHABET_ID!, 7);
 
 export interface URLCorta extends Document {

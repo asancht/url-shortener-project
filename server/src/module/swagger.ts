@@ -1,5 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
+//Configuración de opciones de swagger
+
 const swaggerDefinition = {
   openapi: '3.0.0',
     info: {
@@ -15,9 +17,13 @@ const swaggerDefinition = {
     },
     servers: [
       {
+        url: 'http://ec2-54-211-71-95.compute-1.amazonaws.com:4000',
+        description: 'Production server',
+      },
+      {
         url: 'http://localhost:4000',
         description: 'Development server',
-      },
+      }
     ],
    };
 

@@ -1,6 +1,9 @@
 const { Pool } = require("pg");
 import dotenv from "dotenv";
 dotenv.config();
+
+//Configuración de conexion postgres
+
 export const pool = new Pool({
   user: process.env.PG_DB_USER,
   password: process.env.PG_DB_PASSWORD,

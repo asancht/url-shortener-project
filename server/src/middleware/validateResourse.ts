@@ -1,6 +1,8 @@
 import { AnyObjectSchema } from "yup";
 import { Request, Response, NextFunction } from "express";
 
+//Validacion de URL
+
 const validateResource = (resourceSchema: AnyObjectSchema) => async (
   req: Request,
   res: Response,

@@ -1,6 +1,7 @@
 node_modules/
 build/
 .DS*
-*.lock
+*.lock*
 *-volume/
-*-data/ 
+*-data/
+init-monho.js/ 
