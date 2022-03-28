@@ -116,7 +116,7 @@ export async function updateNuevaURL(req: Request, res: Response) {
   const obj = req.body;
   
   // actualiza la URL original
-  const URL = await URLCorta.findOneAndUpdate( {"URLcortaId": obj.URLcortaId}, {"habilitada" : obj.URLoriginal} ,{ returnOriginal: false });
+  const URL = await URLCorta.findOneAndUpdate( {"URLcortaId": obj.URLcortaId}, {"URLoriginal" : obj.URLoriginal} ,{ returnOriginal: false });
   
   //Borra cache de ID actualizado
   const saveResult = await DEL_ASYNC(obj.URLcortaId);
