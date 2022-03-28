@@ -1,14 +1,14 @@
 version: '3.7'
 
 services:
-  url-shortener-server:
+  url-shortener-service:
     container_name: url-shortener
     restart: always
     env_file:
       - .env_prod
     build:
       context: ./
-    image: url-shortener-server
+    image: url-shortener-service
     expose:
       - '4000'
     ports:

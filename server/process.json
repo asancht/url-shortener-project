@@ -1,7 +1,7 @@
 {
     "apps": [
       {
-        "name": "url-shortener-server",
+        "name": "url-shortener-service",
         "script": "build/src/app.js",
         "watch": false,
         "instances": "max",
