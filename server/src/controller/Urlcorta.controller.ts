@@ -67,7 +67,7 @@ export async function handleRedirect(req: Request, res: Response) {
   console.log( strURLOriginal);
   console.log(strURLcortaId); 
   //Se resgitra visita
-  const insertaVisita = await visitas.query("INSERT INTO visitas (url_id, url, visita) VALUES($1, $2, $3)" , [strURLcortaId.toString, strURLOriginal.toString ,new Date().getDate()]);
+  const insertaVisita = await visitas.query({text: process.env.PG_QUERY , values: [strURLcortaId, strURLOriginal ,new Date()]});
 
 } catch (err) {
     //se registra error en registro de visita
