@@ -9,10 +9,10 @@ export const pool = new Pool({
   password: process.env.PG_DB_PASSWORD,
   host: process.env.PG_DB_HOST,
   port: process.env.PG_DB_PORT,
-  database: process.env.PG_DB_DATABASE || "URLvistas",
+  database: process.env.PG_DB_DATABASE || "URLvisitas",
   max: 20,
   connectionTimeoutMillis: 0,
-  idleTimeoutMillis: 3000,
+  idleTimeoutMillis: 3000
 });
 
 pool.on("error", (err: any) => {
