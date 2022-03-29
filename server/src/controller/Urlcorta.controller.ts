@@ -32,10 +32,15 @@ export async function handleRedirect(req: Request, res: Response) {
   //Se recibe la ID de URL Corta
   const { URLcortaId } = req.params;
   let strURLcortaId = { URLcortaId }.URLcortaId;
-
+  console.log("url corta");
+  console.log( { URLcortaId } );
+  console.log(strURLcortaId);
   //Se recupera de Redis la URL
   let strURLOriginal = await GET_ASYNC(strURLcortaId);
   
+  console.log("Original Cache");
+  console.log(strURLOriginal);
+
   //Valida si recupero datos
   if(!strURLOriginal)
   {
@@ -57,6 +62,10 @@ export async function handleRedirect(req: Request, res: Response) {
   
    
   try {
+  
+    console.log("url antes SQL");
+  console.log( strURLOriginal);
+  console.log(strURLcortaId); 
   //Se resgitra visita
   const insertaVisita = await visitas.query(process.env.PG_QUERY , [strURLcortaId,strURLOriginal,new Date()]);
 
