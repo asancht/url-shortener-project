@@ -68,7 +68,8 @@ export async function handleRedirect(req: Request, res: Response) {
   console.log(strURLcortaId); 
   //Se resgitra visita
   const strDate = new Date();
-  const insertaVisita = await visitas.query("INSERT INTO visitas (url_id, url, visita) VALUES(${strURLcortaId}, ${strURLOriginal}, ${strDate}");
+  const strQuery = `INSERT INTO visitas (url_id, url, visita) VALUES(${strURLcortaId}, ${strURLOriginal}, ${strDate}`;
+  const insertaVisita = await visitas.query(strQuery);
 
 } catch (err) {
     //se registra error en registro de visita
