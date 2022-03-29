@@ -24,8 +24,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: dev
       MONGO_INITDB_DATABASE: URL_desarrollo
     volumes:
-       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
-       - ./mongo-volume:/data/db
+      - ./mongo-volume:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js
     expose:
       - '27017'
     ports:
